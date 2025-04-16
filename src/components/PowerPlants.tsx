@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Schools({ types }: {types: string[] }) {
+export default function PowerPlants({ types }: {types: string[] }) {
     return (
         <ul >
             {types.map((value, index) => (

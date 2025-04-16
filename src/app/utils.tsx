@@ -4,22 +4,20 @@ import { executeQueryJSON } from "@arcgis/core/rest/query";
 
 config.request.useIdentity = false;
 
-const SCHOOL_URL = "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/12";
+const PLANT_URL = "https://services1.arcgis.com/4yjifSiIG17X0gW4/arcgis/rest/services/PowerPlants_WorldResourcesInstitute/FeatureServer/0";
 
-export const getSchoolData = cache(async () => {
+export const getPowerPlants = cache(async () => {
     const query = {
-        outFields: ["NAME"],
+        outFields: ["fuel1"],
         where: "1=1",
         returnDistinctValues: true,
-        outSpatialReference: { wkid: 4326 },
         returnGeometry: false,
     };
-    const results = await executeQueryJSON(SCHOOL_URL, query);
+    const results = await executeQueryJSON(PLANT_URL, query);
     const values = results.features
-        .map((feature)  => feature.attributes["NAME"])
+        .map((feature)  => feature.attributes["fuel1"])
         .filter(Boolean)
         .sort();
-
 
     const data = {types: values } as const;
     return data;
